@@ -62,7 +62,7 @@ function TestimonialCard({
   testimonial: (typeof testimonials)[0];
 }) {
   return (
-    <div className="w-80 p-6 rounded-2xl border border-white/[0.08] bg-white/[0.03] backdrop-blur-sm flex flex-col gap-4 hover:border-violet-500/20 transition-colors duration-300">
+    <div className="w-80 p-6 rounded-2xl border border-foreground/[0.08] bg-foreground/[0.03] dark:border-white/[0.08] dark:bg-white/[0.03] backdrop-blur-sm flex flex-col gap-4 hover:border-violet-500/20 transition-colors duration-300">
       <div className="flex items-center justify-between">
         <div className="flex gap-0.5">
           {Array.from({ length: testimonial.rating }).map((_, i) => (
@@ -71,14 +71,14 @@ function TestimonialCard({
         </div>
         <Quote className="w-6 h-6 text-violet-500/40" />
       </div>
-      <p className="text-white/70 text-sm leading-relaxed">{testimonial.text}</p>
-      <div className="flex items-center gap-3 mt-auto pt-2 border-t border-white/[0.06]">
+      <p className="text-foreground/70 text-sm leading-relaxed">{testimonial.text}</p>
+      <div className="flex items-center gap-3 mt-auto pt-2 border-t border-foreground/[0.06] dark:border-white/[0.06]">
         <div className="w-10 h-10 rounded-full bg-gradient-to-br from-violet-500 to-indigo-600 flex items-center justify-center text-white text-sm font-bold">
           {testimonial.avatar}
         </div>
         <div>
-          <div className="text-white text-sm font-semibold">{testimonial.name}</div>
-          <div className="text-white/40 text-xs">{testimonial.role}</div>
+          <div className="text-foreground text-sm font-semibold">{testimonial.name}</div>
+          <div className="text-foreground/40 text-xs">{testimonial.role}</div>
         </div>
       </div>
     </div>
@@ -87,7 +87,7 @@ function TestimonialCard({
 
 export function TestimonialsSection() {
   return (
-    <section className="relative py-24 bg-[#05051a] overflow-hidden">
+    <section className="relative py-24 bg-transparent overflow-hidden">
       {/* Gradient */}
       <div className="absolute inset-0 pointer-events-none">
         <div className="absolute top-1/2 left-1/4 w-[400px] h-[400px] bg-violet-600/8 blur-[100px]" />
@@ -105,13 +105,13 @@ export function TestimonialsSection() {
           <span className="inline-flex items-center gap-2 px-4 py-2 rounded-full border border-violet-500/30 bg-violet-500/10 text-violet-300 text-sm font-medium mb-6">
             Testimonials
           </span>
-          <h2 className="text-4xl sm:text-5xl font-black text-white tracking-tight mb-4">
+          <h2 className="text-4xl sm:text-5xl font-black text-foreground tracking-tight mb-4">
             What Our{" "}
-            <span className="bg-gradient-to-r from-violet-400 to-indigo-400 bg-clip-text text-transparent">
+            <span className="bg-gradient-to-r from-violet-500 to-indigo-500 dark:from-violet-400 dark:to-indigo-400 bg-clip-text text-transparent">
               Clients Say
             </span>
           </h2>
-          <p className="text-white/50 text-lg max-w-xl mx-auto">
+          <p className="text-foreground/50 text-lg max-w-xl mx-auto">
             Real stories from real businesses we&apos;ve helped grow with exceptional digital
             experiences.
           </p>

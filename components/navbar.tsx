@@ -35,7 +35,7 @@ export function Navbar() {
         className={cn(
           "fixed top-0 left-0 right-0 z-50 transition-all duration-300",
           isScrolled
-            ? "backdrop-blur-xl bg-[#080820]/80 border-b border-white/[0.08] shadow-lg shadow-black/20"
+            ? "backdrop-blur-xl bg-background/80 border-b border-border shadow-lg shadow-foreground/5"
             : "bg-transparent"
         )}
       >
@@ -56,8 +56,8 @@ export function Navbar() {
                   className={cn(
                     "px-4 py-2 rounded-lg text-sm font-medium transition-all duration-200",
                     active === link.label
-                      ? "text-white bg-white/10"
-                      : "text-white/60 hover:text-white hover:bg-white/5"
+                      ? "text-foreground bg-foreground/10"
+                      : "text-foreground/60 hover:text-foreground hover:bg-foreground/5"
                   )}
                 >
                   {link.label}
@@ -65,8 +65,8 @@ export function Navbar() {
               ))}
             </div>
 
-            {/* CTA */}
-            <div className="hidden md:flex items-center gap-3">
+            {/* Desktop CTA & Toggler */}
+            <div className="hidden md:flex items-center gap-4">
               <a
                 href="#contact"
                 className="px-4 py-2 rounded-xl bg-gradient-to-r from-violet-600 to-indigo-600 text-white text-sm font-semibold hover:from-violet-500 hover:to-indigo-500 transition-all duration-200 shadow-lg shadow-violet-500/25 hover:shadow-violet-500/40"
@@ -75,15 +75,17 @@ export function Navbar() {
               </a>
             </div>
 
-            {/* Mobile Menu Toggle */}
-            <button
-              id="mobile-menu-toggle"
-              onClick={() => setIsOpen(!isOpen)}
-              className="md:hidden p-2 rounded-lg text-white/70 hover:text-white hover:bg-white/10 transition-colors"
-              aria-label="Toggle menu"
-            >
-              {isOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
-            </button>
+            {/* Mobile Menu & Theme Toggle */}
+            <div className="flex md:hidden items-center gap-2">
+              <button
+                id="mobile-menu-toggle"
+                onClick={() => setIsOpen(!isOpen)}
+                className="p-2 rounded-lg text-foreground/70 hover:text-foreground hover:bg-foreground/10 transition-colors"
+                aria-label="Toggle menu"
+              >
+                {isOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
+              </button>
+            </div>
           </div>
         </div>
       </motion.nav>
@@ -96,7 +98,7 @@ export function Navbar() {
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -20 }}
             transition={{ duration: 0.2 }}
-            className="fixed top-16 left-0 right-0 z-40 backdrop-blur-xl bg-[#080820]/95 border-b border-white/[0.08] md:hidden"
+            className="fixed top-16 left-0 right-0 z-40 backdrop-blur-xl bg-background/95 border-b border-border md:hidden"
           >
             <div className="px-4 py-4 flex flex-col gap-2">
               {navLinks.map((link) => (
@@ -107,7 +109,7 @@ export function Navbar() {
                     setActive(link.label);
                     setIsOpen(false);
                   }}
-                  className="px-4 py-3 rounded-xl text-white/70 hover:text-white hover:bg-white/10 transition-all duration-200 font-medium"
+                  className="px-4 py-3 rounded-xl text-foreground/70 hover:text-foreground hover:bg-foreground/10 transition-all duration-200 font-medium"
                 >
                   {link.label}
                 </a>

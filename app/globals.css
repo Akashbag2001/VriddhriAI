@@ -1,10 +1,7 @@
 @import "tailwindcss";
 @import "tw-animate-css";
 @import "shadcn/tailwind.css";
-
-@custom-variant dark (&:is(.dark *));
-
-@theme inline {
+@theme {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
   --font-sans: var(--font-inter), system-ui, -apple-system, sans-serif;
@@ -48,40 +45,40 @@
   --radius-4xl: calc(var(--radius) * 2.6);
 }
 
-/* Dark-only theme — site is always dark */
+/* Theme values (Permanent Dark Theme) */
 :root {
-  --background: oklch(0.07 0.02 278);
-  --foreground: oklch(0.985 0 0);
-  --card: oklch(0.10 0.02 278);
-  --card-foreground: oklch(0.985 0 0);
-  --popover: oklch(0.10 0.02 278);
-  --popover-foreground: oklch(0.985 0 0);
-  --primary: oklch(0.65 0.22 280);
-  --primary-foreground: oklch(0.985 0 0);
-  --secondary: oklch(0.15 0.02 278);
-  --secondary-foreground: oklch(0.985 0 0);
-  --muted: oklch(0.15 0.02 278);
-  --muted-foreground: oklch(0.60 0.02 278);
-  --accent: oklch(0.60 0.22 280);
-  --accent-foreground: oklch(0.985 0 0);
-  --destructive: oklch(0.577 0.245 27.325);
-  --border: oklch(1 0 0 / 8%);
-  --input: oklch(1 0 0 / 10%);
-  --ring: oklch(0.65 0.22 280);
-  --chart-1: oklch(0.65 0.22 280);
-  --chart-2: oklch(0.60 0.18 240);
-  --chart-3: oklch(0.55 0.18 300);
-  --chart-4: oklch(0.75 0.15 180);
-  --chart-5: oklch(0.65 0.18 120);
+  --background: hsl(240 10% 3.9%);
+  --foreground: hsl(0 0% 98%);
+  --card: hsl(240 10% 3.9%);
+  --card-foreground: hsl(0 0% 98%);
+  --popover: hsl(240 10% 3.9%);
+  --popover-foreground: hsl(0 0% 98%);
+  --primary: hsl(263.4 70% 50.4%);
+  --primary-foreground: hsl(0 0% 98%);
+  --secondary: hsl(240 3.7% 15.9%);
+  --secondary-foreground: hsl(0 0% 98%);
+  --muted: hsl(240 3.7% 15.9%);
+  --muted-foreground: hsl(240 5% 64.9%);
+  --accent: hsl(240 3.7% 15.9%);
+  --accent-foreground: hsl(0 0% 98%);
+  --destructive: hsl(0 62.8% 30.6%);
+  --border: hsl(240 3.7% 15.9%);
+  --input: hsl(240 3.7% 15.9%);
+  --ring: hsl(263.4 70% 50.4%);
+  --chart-1: hsl(263.4 70% 50.4%);
+  --chart-2: hsl(240 3.7% 15.9%);
+  --chart-3: hsl(0 0% 98%);
+  --chart-4: hsl(0 0% 0%);
+  --chart-5: hsl(0 0% 0%);
   --radius: 0.75rem;
-  --sidebar: oklch(0.10 0.02 278);
-  --sidebar-foreground: oklch(0.985 0 0);
-  --sidebar-primary: oklch(0.65 0.22 280);
-  --sidebar-primary-foreground: oklch(0.985 0 0);
-  --sidebar-accent: oklch(0.15 0.02 278);
-  --sidebar-accent-foreground: oklch(0.985 0 0);
-  --sidebar-border: oklch(1 0 0 / 8%);
-  --sidebar-ring: oklch(0.65 0.22 280);
+  --sidebar: hsl(240 10% 3.9%);
+  --sidebar-foreground: hsl(0 0% 98%);
+  --sidebar-primary: hsl(263.4 70% 50.4%);
+  --sidebar-primary-foreground: hsl(0 0% 98%);
+  --sidebar-accent: hsl(240 3.7% 15.9%);
+  --sidebar-accent-foreground: hsl(0 0% 98%);
+  --sidebar-border: hsl(240 3.7% 15.9%);
+  --sidebar-ring: hsl(263.4 70% 50.4%);
 }
 
 @layer base {

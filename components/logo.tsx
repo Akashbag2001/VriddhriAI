@@ -111,7 +111,7 @@ export function LogoWordmark({ className, size = 36 }: LogoProps) {
         className="font-black tracking-tight leading-none"
         style={{ fontSize: size * 0.58 }}
       >
-        <span className="text-white">Vriddhi</span>
+        <span className="text-foreground transition-colors duration-300">Vriddhi</span>
         <span
           style={{
             background: "linear-gradient(135deg, #a78bfa, #818cf8)",

@@ -3,6 +3,7 @@
 import { useState } from "react";
 import { motion, AnimatePresence } from "motion/react";
 import { ExternalLink, Globe, ShoppingCart, Camera, Home, TrendingUp, Building } from "lucide-react";
+import Image from "next/image";
 import { ThreeDCard } from "@/components/ui/3d-card";
 import { cn } from "@/lib/utils";
 
@@ -32,6 +33,7 @@ const projects = [
     color: "from-violet-500 to-purple-600",
     accentColor: "violet",
     preview: "#0d0a1a",
+    thumbnail: "/thumbnails/sansaptak.png",
   },
   {
     id: "rhino",
@@ -84,6 +86,7 @@ const projects = [
     color: "from-blue-500 to-indigo-600",
     accentColor: "blue",
     preview: "#050a1a",
+    thumbnail: "/thumbnails/deys.png",
   },
   {
     id: "apex",
@@ -97,6 +100,7 @@ const projects = [
     color: "from-orange-500 to-red-600",
     accentColor: "orange",
     preview: "#1a0800",
+    thumbnail: "/thumbnails/apex.png",
   },
 ];
 
@@ -112,7 +116,7 @@ export function PortfolioSection() {
       : projects.filter((p) => p.category === activeCategory);
 
   return (
-    <section id="work" className="relative py-24 lg:py-32 bg-[#05051a] overflow-hidden">
+    <section id="work" className="relative py-24 lg:py-32 bg-transparent overflow-hidden">
       {/* Gradient */}
       <div className="absolute inset-0 pointer-events-none">
         <div className="absolute bottom-0 right-1/4 w-[600px] h-[400px] bg-indigo-600/8 blur-[100px]" />
@@ -197,24 +201,36 @@ export function PortfolioSection() {
                     onMouseEnter={() => setHoveredId(project.id)}
                     onMouseLeave={() => setHoveredId(null)}
                   >
-                    {/* Preview area - iframe or gradient mock */}
+                    {/* Preview area - static thumbnail or live iframe */}
                     <div
                       className="relative h-48 overflow-hidden"
                       style={{ background: project.preview }}
                     >
-                      {/* Gradient overlay on top */}
-                      <div className={cn("absolute inset-0 bg-gradient-to-br opacity-20", project.color)} />
+                      {/* Gradient tint overlay */}
+                      <div className={cn("absolute inset-0 bg-gradient-to-br opacity-10 z-10", project.color)} />
 
-                      {/* Site preview iframe */}
-                      <div className="absolute inset-0 overflow-hidden rounded-t-2xl">
-                        <iframe
-                          src={project.url}
-                          className="w-[200%] h-[200%] origin-top-left scale-50 pointer-events-none"
-                          title={project.title}
-                          loading="lazy"
-                          sandbox="allow-same-origin"
+                      {project.thumbnail ? (
+                        /* Static screenshot thumbnail (used for sites blocking iframes) */
+                        <Image
+                          src={project.thumbnail}
+                          alt={`${project.title} screenshot`}
+                          fill
+                          className="object-cover object-top"
+                          sizes="(max-width: 768px) 100vw, 33vw"
+                          priority={false}
                         />
-                      </div>
+                      ) : (
+                        /* Live iframe for sites that allow embedding */
+                        <div className="absolute inset-0 overflow-hidden rounded-t-2xl">
+                          <iframe
+                            src={project.url}
+                            className="w-[200%] h-[200%] origin-top-left scale-50 pointer-events-none"
+                            title={project.title}
+                            loading="lazy"
+                            sandbox="allow-same-origin"
+                          />
+                        </div>
+                      )}
 
                       {/* Overlay on hover */}
                       <div

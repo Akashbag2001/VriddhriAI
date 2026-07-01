@@ -40,7 +40,7 @@ const steps = [
 
 export function ProcessSection() {
   return (
-    <section id="process" className="relative py-24 lg:py-32 bg-[#06061e] overflow-hidden">
+    <section id="process" className="relative py-24 lg:py-32 bg-transparent overflow-hidden">
       {/* Decorative line */}
       <div className="absolute inset-0 pointer-events-none">
         <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[600px] h-[300px] bg-violet-600/6 blur-[100px]" />
@@ -58,13 +58,13 @@ export function ProcessSection() {
           <span className="inline-flex items-center gap-2 px-4 py-2 rounded-full border border-violet-500/30 bg-violet-500/10 text-violet-300 text-sm font-medium mb-6">
             How We Work
           </span>
-          <h2 className="text-4xl sm:text-5xl font-black text-white tracking-tight mb-4">
+          <h2 className="text-4xl sm:text-5xl font-black text-foreground tracking-tight mb-4">
             Our{" "}
-            <span className="bg-gradient-to-r from-violet-400 to-indigo-400 bg-clip-text text-transparent">
+            <span className="bg-gradient-to-r from-violet-500 to-indigo-500 dark:from-violet-400 dark:to-indigo-400 bg-clip-text text-transparent">
               Process
             </span>
           </h2>
-          <p className="text-white/50 text-lg max-w-2xl mx-auto">
+          <p className="text-foreground/50 text-lg max-w-2xl mx-auto">
             A streamlined 4-step process that takes your idea from concept to a live, high-performing
             product — typically within 2–6 weeks.
           </p>
@@ -92,8 +92,8 @@ export function ProcessSection() {
                   <div
                     className={`w-24 h-24 rounded-2xl bg-gradient-to-br ${step.color} p-0.5 shadow-lg`}
                   >
-                    <div className="w-full h-full rounded-[14px] bg-[#06061e] flex flex-col items-center justify-center gap-1">
-                      <div className="text-white opacity-90">{step.icon}</div>
+                    <div className="w-full h-full rounded-[14px] bg-card flex flex-col items-center justify-center gap-1">
+                      <div className="text-foreground opacity-90">{step.icon}</div>
                       <div className={`text-xs font-black bg-gradient-to-r ${step.color} bg-clip-text text-transparent`}>
                         {step.number}
                       </div>
@@ -105,8 +105,8 @@ export function ProcessSection() {
                   />
                 </div>
 
-                <h3 className="text-white font-bold text-xl mb-3 text-center">{step.title}</h3>
-                <p className="text-white/50 text-sm leading-relaxed text-center">{step.description}</p>
+                <h3 className="text-foreground font-bold text-xl mb-3 text-center">{step.title}</h3>
+                <p className="text-foreground/50 text-sm leading-relaxed text-center">{step.description}</p>
               </motion.div>
             ))}
           </div>

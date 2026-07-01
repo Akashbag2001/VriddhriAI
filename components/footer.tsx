@@ -36,7 +36,7 @@ const footerLinks = {
 
 export function Footer() {
   return (
-    <footer className="relative bg-[#040414] border-t border-white/[0.06] py-16">
+    <footer className="relative bg-transparent border-t border-foreground/[0.06] dark:border-white/[0.06] py-16">
       {/* Top gradient line */}
       <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-violet-500/40 to-transparent" />
 
@@ -47,7 +47,7 @@ export function Footer() {
             <Link href="#home" className="mb-4 w-fit block">
               <LogoWordmark size={30} />
             </Link>
-            <p className="text-white/40 text-sm leading-relaxed max-w-xs mb-6">
+            <p className="text-foreground/40 text-sm leading-relaxed max-w-xs mb-6">
               Premium freelance web agency crafting digital experiences that grow your business.
               Based in India, working worldwide.
             </p>
@@ -62,7 +62,7 @@ export function Footer() {
                   key={s.label}
                   href={s.href}
                   aria-label={s.label}
-                  className="w-9 h-9 rounded-lg border border-white/10 bg-white/3 flex items-center justify-center text-white/40 hover:text-white hover:border-white/20 hover:bg-white/10 transition-all"
+                  className="w-9 h-9 rounded-lg border border-foreground/10 bg-foreground/3 flex items-center justify-center text-foreground/40 hover:text-foreground hover:border-foreground/20 hover:bg-foreground/10 dark:border-white/10 dark:bg-white/3 dark:text-white/40 dark:hover:text-white dark:hover:border-white/20 dark:hover:bg-white/10 transition-all"
                 >
                   {s.icon}
                 </a>
@@ -73,13 +73,13 @@ export function Footer() {
           {/* Links */}
           {Object.entries(footerLinks).map(([category, links]) => (
             <div key={category}>
-              <h4 className="text-white font-semibold text-sm mb-4 tracking-wide">{category}</h4>
+              <h4 className="text-foreground font-semibold text-sm mb-4 tracking-wide">{category}</h4>
               <ul className="space-y-2.5">
                 {links.map((link) => (
                   <li key={link}>
                     <a
                       href="#"
-                      className="text-white/40 text-sm hover:text-white/70 transition-colors"
+                      className="text-foreground/40 text-sm hover:text-foreground/70 transition-colors"
                     >
                       {link}
                     </a>
@@ -91,11 +91,11 @@ export function Footer() {
         </div>
 
         {/* Bottom bar */}
-        <div className="pt-8 border-t border-white/[0.06] flex flex-col sm:flex-row items-center justify-between gap-4">
-          <p className="text-white/30 text-sm">
+        <div className="pt-8 border-t border-foreground/[0.06] dark:border-white/[0.06] flex flex-col sm:flex-row items-center justify-between gap-4">
+          <p className="text-foreground/30 text-sm">
             © {new Date().getFullYear()} VriddhiAI. All rights reserved.
           </p>
-          <p className="text-white/20 text-sm flex items-center gap-1">
+          <p className="text-foreground/20 text-sm flex items-center gap-1">
             Made with <Heart className="w-3 h-3 text-rose-500 fill-rose-500" /> in India
           </p>
         </div>

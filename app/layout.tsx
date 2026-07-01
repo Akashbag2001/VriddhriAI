@@ -50,14 +50,21 @@ export const metadata: Metadata = {
   },
 };
 
+import { ThreeBackground } from "@/components/three-canvas";
+import { CustomCursor } from "@/components/custom-cursor";
+
 export default function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className={`${inter.variable} scroll-smooth`}>
-      <body className="min-h-screen bg-[#05051a] antialiased">{children}</body>
+    <html lang="en" className={`${inter.variable} dark scroll-smooth`}>
+      <body className="min-h-screen bg-background text-foreground antialiased transition-colors duration-500 overflow-x-hidden">
+        <ThreeBackground />
+        <CustomCursor />
+        {children}
+      </body>
     </html>
   );
 }

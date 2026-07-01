@@ -75,7 +75,7 @@ const services = [
 
 export function ServicesSection() {
   return (
-    <section id="services" className="relative py-24 lg:py-32 bg-[#06061e] overflow-hidden">
+    <section id="services" className="relative py-24 lg:py-32 bg-transparent overflow-hidden">
       {/* Background gradient */}
       <div className="absolute inset-0 pointer-events-none">
         <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[800px] h-[400px] bg-violet-600/8 blur-[100px]" />
@@ -93,13 +93,13 @@ export function ServicesSection() {
           <span className="inline-flex items-center gap-2 px-4 py-2 rounded-full border border-violet-500/30 bg-violet-500/10 text-violet-300 text-sm font-medium mb-6">
             What We Do
           </span>
-          <h2 className="text-4xl sm:text-5xl font-black text-white tracking-tight mb-4">
+          <h2 className="text-4xl sm:text-5xl font-black text-foreground tracking-tight mb-4">
             Services That{" "}
-            <span className="bg-gradient-to-r from-violet-400 to-indigo-400 bg-clip-text text-transparent">
+            <span className="bg-gradient-to-r from-violet-500 to-indigo-500 dark:from-violet-400 dark:to-indigo-400 bg-clip-text text-transparent">
               Deliver
             </span>
           </h2>
-          <p className="text-white/50 text-lg max-w-2xl mx-auto">
+          <p className="text-foreground/50 text-lg max-w-2xl mx-auto">
             From concept to launch, we provide end-to-end digital solutions tailored to your
             business goals.
           </p>

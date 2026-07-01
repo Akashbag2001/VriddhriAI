@@ -36,7 +36,7 @@ const stats = [
 
 export function StatsSection() {
   return (
-    <section className="relative py-20 bg-[#06061e] overflow-hidden">
+    <section className="relative py-20 bg-transparent overflow-hidden">
       {/* Gradient line top */}
       <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-violet-500/40 to-transparent" />
       <div className="absolute bottom-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-violet-500/40 to-transparent" />
@@ -64,8 +64,8 @@ export function StatsSection() {
               >
                 <AnimatedCounter target={stat.value} suffix={stat.suffix} duration={2000} />
               </div>
-              <div className="text-white font-semibold text-lg mb-1">{stat.label}</div>
-              <div className="text-white/40 text-sm">{stat.description}</div>
+              <div className="text-foreground font-semibold text-lg mb-1">{stat.label}</div>
+              <div className="text-foreground/40 text-sm">{stat.description}</div>
             </motion.div>
           ))}
         </motion.div>

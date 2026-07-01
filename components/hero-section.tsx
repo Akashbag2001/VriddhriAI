@@ -8,7 +8,7 @@ export function HeroSection() {
   return (
     <section
       id="home"
-      className="relative min-h-screen flex items-center justify-center overflow-hidden bg-[#05051a]"
+      className="relative min-h-screen flex items-center justify-center overflow-hidden bg-transparent"
     >
       {/* Animated gradient orbs */}
       <div className="absolute inset-0 pointer-events-none">
@@ -38,7 +38,7 @@ export function HeroSection() {
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6, delay: 0.2 }}
-          className="inline-flex items-center gap-2 px-4 py-2 rounded-full border border-violet-500/30 bg-violet-500/10 text-violet-300 text-sm font-medium mb-8 backdrop-blur-sm"
+          className="inline-flex items-center gap-2 px-4 py-2 rounded-full border border-violet-500/30 bg-violet-500/10 text-violet-400 text-sm font-medium mb-8 backdrop-blur-sm"
         >
           <Sparkles className="w-4 h-4" />
           Freelance Web Agency — Crafting Digital Excellence
@@ -49,19 +49,19 @@ export function HeroSection() {
           initial={{ opacity: 0, y: 40 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, delay: 0.3, ease: [0.22, 1, 0.36, 1] }}
-          className="text-5xl sm:text-6xl md:text-7xl lg:text-8xl font-black tracking-tight text-white leading-[1.05] mb-6"
+          className="text-5xl sm:text-6xl md:text-7xl lg:text-8xl font-black tracking-tight text-foreground leading-[1.05] mb-6"
         >
           We Build
           <br />
           <span className="relative">
-            <span className="bg-gradient-to-r from-violet-400 via-purple-400 to-indigo-400 bg-clip-text text-transparent">
+            <span className="bg-gradient-to-r from-violet-500 via-purple-500 to-indigo-500 dark:from-violet-400 dark:via-purple-400 dark:to-indigo-400 bg-clip-text text-transparent">
               Digital Experiences
             </span>
             {/* Underline glow */}
             <span className="absolute -bottom-2 left-0 right-0 h-px bg-gradient-to-r from-transparent via-violet-400 to-transparent opacity-60" />
           </span>
           <br />
-          <span className="text-white/80">That Grow</span>
+          <span className="text-foreground/80">That Grow</span>
         </motion.h1>
 
         {/* Subheading */}
@@ -69,7 +69,7 @@ export function HeroSection() {
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, delay: 0.5 }}
-          className="text-lg sm:text-xl text-white/50 max-w-2xl mx-auto mb-10 leading-relaxed"
+          className="text-lg sm:text-xl text-foreground/50 max-w-2xl mx-auto mb-10 leading-relaxed"
         >
           VriddhiAI is a premium freelance agency crafting high-performance websites,
           e-commerce stores, and digital products that captivate and convert.
@@ -93,9 +93,9 @@ export function HeroSection() {
           <a
             href="#contact"
             id="hero-cta-contact"
-            className="group flex items-center gap-2 px-8 py-4 rounded-2xl border border-white/10 bg-white/5 text-white font-semibold text-lg hover:bg-white/10 hover:border-white/20 transition-all duration-200 backdrop-blur-sm hover:-translate-y-0.5"
+            className="group flex items-center gap-2 px-8 py-4 rounded-2xl border border-foreground/10 bg-foreground/5 text-foreground font-semibold text-lg hover:bg-foreground/10 hover:border-foreground/20 transition-all duration-200 backdrop-blur-sm hover:-translate-y-0.5"
           >
-            <Play className="w-4 h-4" />
+            <Play className="w-4 h-4 text-violet-500 dark:text-violet-400" />
             Start a Project
           </a>
         </motion.div>
@@ -107,8 +107,8 @@ export function HeroSection() {
           transition={{ delay: 1.2 }}
           className="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2"
         >
-          <span className="text-white/30 text-xs tracking-widest uppercase">Scroll</span>
-          <div className="w-px h-8 bg-gradient-to-b from-white/30 to-transparent" />
+          <span className="text-foreground/30 text-xs tracking-widest uppercase">Scroll</span>
+          <div className="w-px h-8 bg-gradient-to-b from-foreground/30 to-transparent" />
         </motion.div>
 
         {/* Floating tech logos/badges */}
@@ -116,12 +116,12 @@ export function HeroSection() {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.9, duration: 0.8 }}
-          className="mt-16 flex flex-wrap items-center justify-center gap-6 text-white/20 text-sm"
+          className="mt-16 flex flex-wrap items-center justify-center gap-6 text-foreground/20 text-sm"
         >
           {["Next.js", "React", "TypeScript", "Tailwind", "Figma", "Webflow"].map((tech) => (
             <span
               key={tech}
-              className="px-4 py-1.5 rounded-full border border-white/10 bg-white/3 hover:text-white/40 hover:border-white/20 transition-colors cursor-default"
+              className="px-4 py-1.5 rounded-full border border-foreground/10 bg-foreground/3 hover:text-foreground/40 hover:border-foreground/20 transition-colors cursor-default"
             >
               {tech}
             </span>
