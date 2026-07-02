@@ -1,10 +1,9 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useRef, useCallback } from "react";
 import { motion, AnimatePresence } from "motion/react";
 import { ExternalLink, Globe, ShoppingCart, Camera, Home, TrendingUp, Building } from "lucide-react";
 import Image from "next/image";
-import { ThreeDCard } from "@/components/ui/3d-card";
 import { cn } from "@/lib/utils";
 
 const projects = [
@@ -106,9 +105,151 @@ const projects = [
 
 const categories = ["All", "E-Commerce", "Web App", "Marketing", "Photography", "Hospitality", "Finance", "Construction"];
 
+// ── CSS-only tilt hook (no preserve-3d → child pointer-events all work) ──
+function useTilt(intensity = 8) {
+  const ref = useRef<HTMLDivElement>(null);
+  const onMove = useCallback((e: React.MouseEvent<HTMLDivElement>) => {
+    const el = ref.current;
+    if (!el) return;
+    const r = el.getBoundingClientRect();
+    const x = ((e.clientX - r.left) / r.width - 0.5) * intensity * 2;
+    const y = ((e.clientY - r.top) / r.height - 0.5) * -intensity * 2;
+    el.style.transform = `perspective(900px) rotateX(${y}deg) rotateY(${x}deg) scale(1.02)`;
+  }, [intensity]);
+  const onLeave = useCallback(() => {
+    if (ref.current) ref.current.style.transform = "perspective(900px) rotateX(0deg) rotateY(0deg) scale(1)";
+  }, []);
+  return { ref, onMove, onLeave };
+}
+
+// ── Single card (hook must be called at component top level) ──
+type Project = typeof projects[number];
+
+function ProjectCard({ project }: { project: Project }) {
+  const tilt = useTilt(8);
+  const [hovered, setHovered] = useState(false);
+
+  return (
+    <div
+      ref={tilt.ref}
+      onMouseMove={tilt.onMove}
+      onMouseLeave={(e) => { tilt.onLeave(); setHovered(false); }}
+      onMouseEnter={() => setHovered(true)}
+      className="h-full transition-transform duration-200 ease-out will-change-transform"
+    >
+      <div
+        className={cn(
+          "relative h-full rounded-2xl border overflow-hidden",
+          "bg-white/[0.03] backdrop-blur-sm transition-colors duration-300",
+          hovered ? "border-white/20" : "border-white/[0.08]"
+        )}
+      >
+        {/* Preview area */}
+        <div className="relative h-48 overflow-hidden" style={{ background: project.preview }}>
+          <div className={cn("absolute inset-0 bg-gradient-to-br opacity-10", project.color)} />
+
+          {project.thumbnail ? (
+            <Image
+              src={project.thumbnail}
+              alt={`${project.title} screenshot`}
+              fill
+              className="object-cover object-top"
+              sizes="(max-width: 768px) 100vw, 33vw"
+              priority={false}
+            />
+          ) : (
+            <div className="absolute inset-0 overflow-hidden rounded-t-2xl">
+              <iframe
+                src={project.url}
+                className="w-[200%] h-[200%] origin-top-left scale-50 pointer-events-none"
+                title={project.title}
+                loading="lazy"
+                sandbox="allow-same-origin"
+              />
+            </div>
+          )}
+
+          {/* Hover overlay (pointer-events-none so anchor below gets clicks) */}
+          <div
+            className={cn(
+              "absolute inset-0 flex items-center justify-center transition-opacity duration-300 pointer-events-none",
+              hovered ? "opacity-100" : "opacity-0",
+              "bg-black/50 backdrop-blur-sm"
+            )}
+          >
+            <span
+              className={cn(
+                "flex items-center gap-2 px-5 py-2.5 rounded-xl text-white font-semibold text-sm",
+                "bg-gradient-to-r", project.color, "shadow-lg"
+              )}
+            >
+              <ExternalLink className="w-4 h-4" />
+              Visit Site
+            </span>
+          </div>
+
+          {/* Category badge */}
+          <div className="absolute top-3 left-3 pointer-events-none">
+            <span className={cn(
+              "flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-semibold text-white/90",
+              "bg-black/40 backdrop-blur-md border border-white/10"
+            )}>
+              <span className={cn("w-1.5 h-1.5 rounded-full bg-gradient-to-r", project.color)} />
+              {project.category}
+            </span>
+          </div>
+
+          {/* Full-coverage real link */}
+          <a
+            href={project.url}
+            target="_blank"
+            rel="noopener noreferrer"
+            aria-label={`Visit ${project.title}`}
+            className="absolute inset-0"
+          />
+        </div>
+
+        {/* Card body */}
+        <div className="p-5">
+          <div className="flex items-start justify-between mb-3">
+            <h3 className="text-white font-bold text-lg leading-tight">{project.title}</h3>
+            <div className={cn(
+              "flex-shrink-0 w-9 h-9 rounded-xl flex items-center justify-center text-white",
+              "bg-gradient-to-br", project.color, "shadow-lg"
+            )}>
+              {project.icon}
+            </div>
+          </div>
+
+          <p className="text-white/50 text-sm leading-relaxed mb-4">{project.description}</p>
+
+          <div className="flex items-center justify-between flex-wrap gap-2">
+            <div className="flex flex-wrap gap-2">
+              {project.tags.map((tag) => (
+                <span key={tag} className="px-2.5 py-1 rounded-lg text-xs font-medium border border-white/[0.08] text-white/40 bg-white/[0.03]">
+                  {tag}
+                </span>
+              ))}
+            </div>
+            <a
+              id={`visit-${project.id}`}
+              href={project.url}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="flex items-center gap-1.5 text-xs font-semibold text-white/40 hover:text-violet-400 transition-colors group"
+            >
+              <ExternalLink className="w-3.5 h-3.5 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
+              Open
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+}
+
 export function PortfolioSection() {
   const [activeCategory, setActiveCategory] = useState("All");
-  const [hoveredId, setHoveredId] = useState<string | null>(null);
 
   const filtered =
     activeCategory === "All"
@@ -186,129 +327,7 @@ export function PortfolioSection() {
                 exit={{ opacity: 0, scale: 0.9 }}
                 transition={{ duration: 0.4, delay: i * 0.05 }}
               >
-                <ThreeDCard
-                  containerClassName="h-full"
-                  className="h-full"
-                  rotateIntensity={8}
-                >
-                  <div
-                    className={cn(
-                      "relative h-full rounded-2xl border border-white/[0.08] overflow-hidden",
-                      "bg-white/[0.03] backdrop-blur-sm",
-                      "transition-all duration-300",
-                      hoveredId === project.id && "border-white/20"
-                    )}
-                    onMouseEnter={() => setHoveredId(project.id)}
-                    onMouseLeave={() => setHoveredId(null)}
-                  >
-                    {/* Preview area - static thumbnail or live iframe */}
-                    <div
-                      className="relative h-48 overflow-hidden"
-                      style={{ background: project.preview }}
-                    >
-                      {/* Gradient tint overlay */}
-                      <div className={cn("absolute inset-0 bg-gradient-to-br opacity-10 z-10", project.color)} />
-
-                      {project.thumbnail ? (
-                        /* Static screenshot thumbnail (used for sites blocking iframes) */
-                        <Image
-                          src={project.thumbnail}
-                          alt={`${project.title} screenshot`}
-                          fill
-                          className="object-cover object-top"
-                          sizes="(max-width: 768px) 100vw, 33vw"
-                          priority={false}
-                        />
-                      ) : (
-                        /* Live iframe for sites that allow embedding */
-                        <div className="absolute inset-0 overflow-hidden rounded-t-2xl">
-                          <iframe
-                            src={project.url}
-                            className="w-[200%] h-[200%] origin-top-left scale-50 pointer-events-none"
-                            title={project.title}
-                            loading="lazy"
-                            sandbox="allow-same-origin"
-                          />
-                        </div>
-                      )}
-
-                      {/* Overlay on hover */}
-                      <div
-                        className={cn(
-                          "absolute inset-0 flex items-center justify-center transition-opacity duration-300",
-                          hoveredId === project.id ? "opacity-100" : "opacity-0",
-                          "bg-black/60 backdrop-blur-sm"
-                        )}
-                      >
-                        <a
-                          href={project.url}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          id={`visit-${project.id}`}
-                          className={cn(
-                            "flex items-center gap-2 px-5 py-2.5 rounded-xl text-white font-semibold text-sm",
-                            "bg-gradient-to-r",
-                            project.color,
-                            "shadow-lg hover:scale-105 transition-transform"
-                          )}
-                          onClick={(e) => e.stopPropagation()}
-                        >
-                          <ExternalLink className="w-4 h-4" />
-                          Visit Site
-                        </a>
-                      </div>
-
-                      {/* Category badge */}
-                      <div className="absolute top-3 left-3">
-                        <span
-                          className={cn(
-                            "flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-semibold text-white/90",
-                            "bg-black/40 backdrop-blur-md border border-white/10"
-                          )}
-                        >
-                          <span className={cn("w-1.5 h-1.5 rounded-full bg-gradient-to-r", project.color)} />
-                          {project.category}
-                        </span>
-                      </div>
-                    </div>
-
-                    {/* Content */}
-                    <div className="p-5">
-                      <div className="flex items-start justify-between mb-3">
-                        <div>
-                          <h3 className="text-white font-bold text-lg leading-tight">
-                            {project.title}
-                          </h3>
-                        </div>
-                        <div
-                          className={cn(
-                            "flex-shrink-0 w-9 h-9 rounded-xl flex items-center justify-center text-white",
-                            "bg-gradient-to-br",
-                            project.color,
-                            "shadow-lg"
-                          )}
-                        >
-                          {project.icon}
-                        </div>
-                      </div>
-
-                      <p className="text-white/50 text-sm leading-relaxed mb-4">
-                        {project.description}
-                      </p>
-
-                      <div className="flex flex-wrap gap-2">
-                        {project.tags.map((tag) => (
-                          <span
-                            key={tag}
-                            className="px-2.5 py-1 rounded-lg text-xs font-medium border border-white/[0.08] text-white/40 bg-white/[0.03]"
-                          >
-                            {tag}
-                          </span>
-                        ))}
-                      </div>
-                    </div>
-                  </div>
-                </ThreeDCard>
+                <ProjectCard project={project} />
               </motion.div>
             ))}
           </AnimatePresence>

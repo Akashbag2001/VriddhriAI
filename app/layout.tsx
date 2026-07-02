@@ -117,6 +117,7 @@ const jsonLd = {
 
 import { ThreeBackground } from "@/components/three-canvas";
 import { CustomCursor } from "@/components/custom-cursor";
+import { ChatBot } from "@/components/chatbot";
 
 export default function RootLayout({
   children,
@@ -136,6 +137,7 @@ export default function RootLayout({
         <ThreeBackground />
         <CustomCursor />
         {children}
+        <ChatBot />
       </body>
     </html>
   );
