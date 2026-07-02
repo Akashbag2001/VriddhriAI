@@ -24,6 +24,145 @@ const GithubIcon = () => (
   </svg>
 );
 
+// ── Custom Dropdown ──────────────────────────────────────────────
+const PROJECT_OPTIONS = [
+  {
+    group: "Web & Design",
+    items: [
+      { value: "website", label: "Website / Landing Page" },
+      { value: "ecommerce", label: "E-Commerce Store" },
+      { value: "webapp", label: "Web Application" },
+      { value: "redesign", label: "Redesign / Rebrand" },
+    ],
+  },
+  {
+    group: "Marketing & Advertising",
+    items: [
+      { value: "seo", label: "SEO Optimization" },
+      { value: "google-ads", label: "Google Ads Management" },
+      { value: "meta-ads", label: "Meta (Facebook/Instagram) Ads" },
+      { value: "performance-marketing", label: "Digital & Performance Marketing" },
+      { value: "social-media", label: "Social Media Management" },
+    ],
+  },
+  {
+    group: "AI & Automation",
+    items: [
+      { value: "ai-agent", label: "AI Agent Development" },
+      { value: "ai-caller", label: "AI Caller / Voice Agent" },
+      { value: "web-chat", label: "Web Chat Integration" },
+      { value: "dm-automation", label: "Social Media DM Automation" },
+    ],
+  },
+  {
+    group: null,
+    items: [{ value: "other", label: "Other" }],
+  },
+];
+
+function ProjectDropdown({
+  value,
+  onChange,
+}: {
+  value: string;
+  onChange: (v: string) => void;
+}) {
+  const [open, setOpen] = useState(false);
+
+  const selectedLabel =
+    PROJECT_OPTIONS.flatMap((g) => g.items).find((i) => i.value === value)
+      ?.label ?? null;
+
+  return (
+    <div className="relative">
+      {/* Trigger */}
+      <button
+        id="contact-project"
+        type="button"
+        onClick={() => setOpen((o) => !o)}
+        className={`w-full flex items-center justify-between px-4 py-3 rounded-xl border transition-all duration-200 text-left
+          ${open
+            ? "border-violet-500/50 bg-white/[0.08] ring-1 ring-violet-500/20"
+            : "border-white/[0.08] bg-white/[0.05] hover:border-violet-500/30 hover:bg-white/[0.07]"
+          }`}
+      >
+        <span className={selectedLabel ? "text-white font-medium" : "text-white/30"}>
+          {selectedLabel ?? "Select project type…"}
+        </span>
+        <motion.svg
+          animate={{ rotate: open ? 180 : 0 }}
+          transition={{ duration: 0.2 }}
+          className="w-4 h-4 text-white/40 flex-shrink-0 ml-2"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          strokeWidth={2}
+          strokeLinecap="round"
+          strokeLinejoin="round"
+        >
+          <polyline points="6 9 12 15 18 9" />
+        </motion.svg>
+      </button>
+
+      {/* Panel */}
+      {open && (
+        <>
+          {/* Invisible overlay to close on outside click */}
+          <div
+            className="fixed inset-0 z-10"
+            onClick={() => setOpen(false)}
+          />
+          <motion.div
+            initial={{ opacity: 0, y: -6, scale: 0.98 }}
+            animate={{ opacity: 1, y: 0, scale: 1 }}
+            exit={{ opacity: 0, y: -6, scale: 0.98 }}
+            transition={{ duration: 0.15 }}
+            className="absolute z-20 mt-2 w-full rounded-2xl border border-white/[0.1] bg-[#12112a] shadow-2xl shadow-black/60 backdrop-blur-xl overflow-hidden"
+          >
+            <div className="max-h-72 overflow-y-auto py-2 custom-scrollbar">
+              {PROJECT_OPTIONS.map((group, gi) => (
+                <div key={gi}>
+                  {group.group && (
+                    <p className="px-4 pt-3 pb-1 text-[10px] font-bold uppercase tracking-widest text-violet-400/70">
+                      {group.group}
+                    </p>
+                  )}
+                  {group.items.map((item) => (
+                    <button
+                      key={item.value}
+                      type="button"
+                      onClick={() => {
+                        onChange(item.value);
+                        setOpen(false);
+                      }}
+                      className={`w-full text-left px-4 py-2.5 text-sm transition-all duration-150 flex items-center gap-2
+                        ${value === item.value
+                          ? "text-violet-300 bg-violet-500/15 font-semibold"
+                          : "text-white/70 hover:text-white hover:bg-white/[0.06]"
+                        }`}
+                    >
+                      {value === item.value && (
+                        <span className="w-1.5 h-1.5 rounded-full bg-violet-400 flex-shrink-0" />
+                      )}
+                      <span className={value === item.value ? "" : "ml-3.5"}>
+                        {item.label}
+                      </span>
+                    </button>
+                  ))}
+                  {gi < PROJECT_OPTIONS.length - 1 && (
+                    <div className="mx-4 my-1.5 border-t border-white/[0.05]" />
+                  )}
+                </div>
+              ))}
+            </div>
+          </motion.div>
+        </>
+      )}
+    </div>
+  );
+}
+// ─────────────────────────────────────────────────────────────────
+
 export function ContactSection() {
   const [form, setForm] = useState({
     name: "",
@@ -191,34 +330,10 @@ export function ContactSection() {
                   <label htmlFor="contact-project" className="block text-foreground/60 text-sm font-medium mb-2">
                     Project Type
                   </label>
-                  <select
-                    id="contact-project"
+                  <ProjectDropdown
                     value={form.project}
-                    onChange={(e) => setForm({ ...form, project: e.target.value })}
-                    className="w-full px-4 py-3 rounded-xl bg-foreground/[0.05] border border-foreground/[0.08] text-foreground focus:outline-none focus:border-violet-500/50 focus:bg-foreground/[0.08] dark:bg-white/[0.05] dark:border-white/[0.08] dark:text-white dark:focus:bg-white/[0.08] transition-all appearance-none"
-                  >
-                    <option value="" className="bg-card text-foreground">Select project type...</option>
-                    <optgroup label="Web & Design">
-                      <option value="website" className="bg-card text-foreground">Website / Landing Page</option>
-                      <option value="ecommerce" className="bg-card text-foreground">E-Commerce Store</option>
-                      <option value="webapp" className="bg-card text-foreground">Web Application</option>
-                      <option value="redesign" className="bg-card text-foreground">Redesign / Rebrand</option>
-                    </optgroup>
-                    <optgroup label="Marketing & Advertising">
-                      <option value="seo" className="bg-card text-foreground">SEO Optimization</option>
-                      <option value="google-ads" className="bg-card text-foreground">Google Ads Management</option>
-                      <option value="meta-ads" className="bg-card text-foreground">Meta (Facebook/Instagram) Ads</option>
-                      <option value="performance-marketing" className="bg-card text-foreground">Digital & Performance Marketing</option>
-                      <option value="social-media" className="bg-card text-foreground">Social Media Management</option>
-                    </optgroup>
-                    <optgroup label="AI & Automation">
-                      <option value="ai-agent" className="bg-card text-foreground">AI Agent Development</option>
-                      <option value="ai-caller" className="bg-card text-foreground">AI Caller / Voice Agent</option>
-                      <option value="web-chat" className="bg-card text-foreground">Web Chat Integration</option>
-                      <option value="dm-automation" className="bg-card text-foreground">Social Media DM Automation</option>
-                    </optgroup>
-                    <option value="other" className="bg-card text-foreground">Other</option>
-                  </select>
+                    onChange={(v) => setForm({ ...form, project: v })}
+                  />
                 </div>
 
                 <div>
