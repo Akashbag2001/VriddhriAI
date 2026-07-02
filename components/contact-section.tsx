@@ -33,28 +33,27 @@ export function ContactSection() {
   });
   const [submitted, setSubmitted] = useState(false);
   const [sending, setSending] = useState(false);
+  const [error, setError] = useState<string | null>(null);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setSending(true);
+    setError(null);
 
-    const subject = encodeURIComponent(`New Project Inquiry - ${form.name} (${form.project || "General"})`);
-    const body = encodeURIComponent(
-      `Hello VriddhiAI Team,\n\n` +
-      `You have received a new project inquiry from the portfolio contact form.\n\n` +
-      `Client Name: ${form.name}\n` +
-      `Client Email: ${form.email}\n` +
-      `Project Type: ${form.project || "General Inquiry"}\n\n` +
-      `Message Details:\n` +
-      `${form.message}\n\n` +
-      `Best regards,\n` +
-      `${form.name}`
-    );
+    const res = await fetch("/api/contact", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(form),
+    });
 
-    // Open user's email client
-    window.location.href = `mailto:vriddhiai55@gmail.com?subject=${subject}&body=${body}`;
-
+    const json = await res.json();
     setSending(false);
+
+    if (!res.ok) {
+      setError(json.error || "Something went wrong. Please try again.");
+      return;
+    }
+
     setSubmitted(true);
   };
 
@@ -112,7 +111,7 @@ export function ContactSection() {
             </div>
 
             {/* Social links */}
-            <div className="flex gap-3">
+            {/* <div className="flex gap-3">
               {[
                 { icon: <LinkedinIcon />, label: "LinkedIn", href: "#" },
                 { icon: <TwitterIcon />, label: "Twitter", href: "#" },
@@ -127,7 +126,7 @@ export function ContactSection() {
                   {social.icon}
                 </a>
               ))}
-            </div>
+            </div> */}
           </motion.div>
 
           {/* Right: Form */}
@@ -199,10 +198,25 @@ export function ContactSection() {
                     className="w-full px-4 py-3 rounded-xl bg-foreground/[0.05] border border-foreground/[0.08] text-foreground focus:outline-none focus:border-violet-500/50 focus:bg-foreground/[0.08] dark:bg-white/[0.05] dark:border-white/[0.08] dark:text-white dark:focus:bg-white/[0.08] transition-all appearance-none"
                   >
                     <option value="" className="bg-card text-foreground">Select project type...</option>
-                    <option value="website" className="bg-card text-foreground">Website / Landing Page</option>
-                    <option value="ecommerce" className="bg-card text-foreground">E-Commerce Store</option>
-                    <option value="webapp" className="bg-card text-foreground">Web Application</option>
-                    <option value="redesign" className="bg-card text-foreground">Redesign / Rebrand</option>
+                    <optgroup label="Web & Design">
+                      <option value="website" className="bg-card text-foreground">Website / Landing Page</option>
+                      <option value="ecommerce" className="bg-card text-foreground">E-Commerce Store</option>
+                      <option value="webapp" className="bg-card text-foreground">Web Application</option>
+                      <option value="redesign" className="bg-card text-foreground">Redesign / Rebrand</option>
+                    </optgroup>
+                    <optgroup label="Marketing & Advertising">
+                      <option value="seo" className="bg-card text-foreground">SEO Optimization</option>
+                      <option value="google-ads" className="bg-card text-foreground">Google Ads Management</option>
+                      <option value="meta-ads" className="bg-card text-foreground">Meta (Facebook/Instagram) Ads</option>
+                      <option value="performance-marketing" className="bg-card text-foreground">Digital & Performance Marketing</option>
+                      <option value="social-media" className="bg-card text-foreground">Social Media Management</option>
+                    </optgroup>
+                    <optgroup label="AI & Automation">
+                      <option value="ai-agent" className="bg-card text-foreground">AI Agent Development</option>
+                      <option value="ai-caller" className="bg-card text-foreground">AI Caller / Voice Agent</option>
+                      <option value="web-chat" className="bg-card text-foreground">Web Chat Integration</option>
+                      <option value="dm-automation" className="bg-card text-foreground">Social Media DM Automation</option>
+                    </optgroup>
                     <option value="other" className="bg-card text-foreground">Other</option>
                   </select>
                 </div>
@@ -221,6 +235,13 @@ export function ContactSection() {
                     className="w-full px-4 py-3 rounded-xl bg-foreground/[0.05] border border-foreground/[0.08] text-foreground placeholder:text-foreground/30 focus:outline-none focus:border-violet-500/50 focus:bg-foreground/[0.08] dark:bg-white/[0.05] dark:border-white/[0.08] dark:text-white dark:placeholder:text-white/20 dark:focus:bg-white/[0.08] transition-all resize-none"
                   />
                 </div>
+
+                {error && (
+                  <div className="flex items-start gap-3 px-4 py-3 rounded-xl bg-red-500/10 border border-red-500/20 text-red-400 text-sm">
+                    <span className="mt-0.5">⚠</span>
+                    <span>{error}</span>
+                  </div>
+                )}
 
                 <button
                   id="contact-submit"
