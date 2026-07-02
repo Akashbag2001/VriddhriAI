@@ -83,7 +83,7 @@ export function HeroSection() {
           className="flex flex-wrap items-center justify-center gap-4"
         >
           <a
-            href="#work"
+            href="/work"
             id="hero-cta-work"
             className="group flex items-center gap-2 px-8 py-4 rounded-2xl bg-gradient-to-r from-violet-600 to-indigo-600 text-white font-semibold text-lg hover:from-violet-500 hover:to-indigo-500 transition-all duration-200 shadow-lg shadow-violet-500/30 hover:shadow-violet-500/50 hover:-translate-y-0.5"
           >
@@ -91,7 +91,7 @@ export function HeroSection() {
             <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
           </a>
           <a
-            href="#contact"
+            href="/contact"
             id="hero-cta-contact"
             className="group flex items-center gap-2 px-8 py-4 rounded-2xl border border-foreground/10 bg-foreground/5 text-foreground font-semibold text-lg hover:bg-foreground/10 hover:border-foreground/20 transition-all duration-200 backdrop-blur-sm hover:-translate-y-0.5"
           >

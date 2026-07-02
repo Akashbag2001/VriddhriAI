@@ -3,22 +3,23 @@
 import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "motion/react";
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 import { cn } from "@/lib/utils";
 import { Menu, X } from "lucide-react";
 import { LogoWordmark } from "@/components/logo";
 
 const navLinks = [
-  { label: "Home", href: "#home" },
-  { label: "Work", href: "#work" },
-  { label: "Services", href: "#services" },
-  { label: "Process", href: "#process" },
-  { label: "Contact", href: "#contact" },
+  { label: "Home", href: "/" },
+  { label: "Work", href: "/work" },
+  { label: "Services", href: "/services" },
+  { label: "Process", href: "/process" },
+  { label: "Contact", href: "/contact" },
 ];
 
 export function Navbar() {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
-  const [active, setActive] = useState("Home");
+  const pathname = usePathname();
 
   useEffect(() => {
     const handleScroll = () => setIsScrolled(window.scrollY > 20);
@@ -42,40 +43,39 @@ export function Navbar() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex items-center justify-between h-16">
             {/* Logo */}
-            <Link href="#home" className="group">
+            <Link href="/" className="group">
               <LogoWordmark size={32} />
             </Link>
 
             {/* Desktop Links */}
             <div className="hidden md:flex items-center gap-1">
               {navLinks.map((link) => (
-                <a
+                <Link
                   key={link.label}
                   href={link.href}
-                  onClick={() => setActive(link.label)}
                   className={cn(
                     "px-4 py-2 rounded-lg text-sm font-medium transition-all duration-200",
-                    active === link.label
+                    pathname === link.href
                       ? "text-foreground bg-foreground/10"
                       : "text-foreground/60 hover:text-foreground hover:bg-foreground/5"
                   )}
                 >
                   {link.label}
-                </a>
+                </Link>
               ))}
             </div>
 
-            {/* Desktop CTA & Toggler */}
+            {/* Desktop CTA */}
             <div className="hidden md:flex items-center gap-4">
-              <a
-                href="#contact"
+              <Link
+                href="/contact"
                 className="px-4 py-2 rounded-xl bg-gradient-to-r from-violet-600 to-indigo-600 text-white text-sm font-semibold hover:from-violet-500 hover:to-indigo-500 transition-all duration-200 shadow-lg shadow-violet-500/25 hover:shadow-violet-500/40"
               >
                 Get In Touch
-              </a>
+              </Link>
             </div>
 
-            {/* Mobile Menu & Theme Toggle */}
+            {/* Mobile Menu Toggle */}
             <div className="flex md:hidden items-center gap-2">
               <button
                 id="mobile-menu-toggle"
@@ -102,25 +102,27 @@ export function Navbar() {
           >
             <div className="px-4 py-4 flex flex-col gap-2">
               {navLinks.map((link) => (
-                <a
+                <Link
                   key={link.label}
                   href={link.href}
-                  onClick={() => {
-                    setActive(link.label);
-                    setIsOpen(false);
-                  }}
-                  className="px-4 py-3 rounded-xl text-foreground/70 hover:text-foreground hover:bg-foreground/10 transition-all duration-200 font-medium"
+                  onClick={() => setIsOpen(false)}
+                  className={cn(
+                    "px-4 py-3 rounded-xl transition-all duration-200 font-medium",
+                    pathname === link.href
+                      ? "text-foreground bg-foreground/10"
+                      : "text-foreground/70 hover:text-foreground hover:bg-foreground/10"
+                  )}
                 >
                   {link.label}
-                </a>
+                </Link>
               ))}
-              <a
-                href="#contact"
+              <Link
+                href="/contact"
                 onClick={() => setIsOpen(false)}
                 className="px-4 py-3 rounded-xl bg-gradient-to-r from-violet-600 to-indigo-600 text-white font-semibold text-center mt-2 hover:from-violet-500 hover:to-indigo-500 transition-all"
               >
                 Get In Touch
-              </a>
+              </Link>
             </div>
           </motion.div>
         )}

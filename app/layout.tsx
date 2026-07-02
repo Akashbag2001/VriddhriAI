@@ -9,7 +9,7 @@ const inter = Inter({
 });
 
 export const metadata: Metadata = {
-  metadataBase: new URL("https://vriddhiai.com"),
+  metadataBase: new URL("https://vriddhri-ai-yh23.vercel.app"),
   title: "VriddhiAI — AI-Powered Web Agency & Software Development",
   description:
     "VriddhiAI is a premium freelance agency leveraging state-of-the-art AI to accelerate web development while building custom AI applications, chatbots, and intelligent interfaces for global clients.",
@@ -46,7 +46,7 @@ export const metadata: Metadata = {
       "max-snippet": -1,
     },
   },
-  authors: [{ name: "VriddhiAI Team", url: "https://vriddhiai.com" }],
+  authors: [{ name: "VriddhiAI Team", url: "https://vriddhri-ai-yh23.vercel.app" }],
   creator: "VriddhiAI",
   publisher: "VriddhiAI",
   icons: {
@@ -60,7 +60,7 @@ export const metadata: Metadata = {
   openGraph: {
     title: "VriddhiAI — AI-Powered Web Agency & Software Development",
     description: "Immersive 3D interactive experiences, high-performance Next.js websites, and custom-tailored AI chatbots and integrations that scale your business.",
-    url: "https://vriddhiai.com",
+    url: "https://vriddhri-ai-yh23.vercel.app",
     siteName: "VriddhiAI",
     locale: "en_US",
     type: "website",
@@ -82,13 +82,15 @@ export const metadata: Metadata = {
   },
 };
 
+const BASE_URL = "https://vriddhri-ai-yh23.vercel.app";
+
 const jsonLd = {
   "@context": "https://schema.org",
   "@type": "ProfessionalService",
   "name": "VriddhiAI",
-  "url": "https://vriddhiai.com",
-  "logo": "https://vriddhiai.com/logo-full.png",
-  "image": "https://vriddhiai.com/logo-full.png",
+  "url": BASE_URL,
+  "logo": `${BASE_URL}/logo-full.png`,
+  "image": `${BASE_URL}/logo-full.png`,
   "description": "VriddhiAI is a premium freelance agency leveraging state-of-the-art AI to accelerate web development while building custom AI applications, chatbots, and intelligent interfaces.",
   "address": {
     "@type": "PostalAddress",
@@ -124,6 +126,7 @@ export default function RootLayout({
   return (
     <html lang="en" className={`${inter.variable} dark scroll-smooth`}>
       <head>
+        <meta name="theme-color" content="#7c3aed" />
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
